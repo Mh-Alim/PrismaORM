@@ -13,28 +13,21 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        for (let i = 1; i <= 20; i++) {
-            yield prisma.user.create({
-                data: {
-                    email: `user${i}@example.com`,
-                    name: `User ${i}`,
-                    posts: {
-                        create: {
-                            title: `Post by User ${i}`,
-                            content: `This is the content for the post by User ${i}.`,
-                            published: i % 2 === 0, // alternate published state for demonstration
-                        },
-                    },
-                },
-            });
-        }
-        console.log("Inserted 20 users with posts");
+        yield prisma.user.update({
+            where: {
+                id: 1,
+            },
+            data: {
+                name: "kalim",
+                email: "kalim@gmail.com",
+            },
+        });
     });
 }
 main()
-    .then(() => __awaiter(void 0, void 0, void 0, function* () { return prisma.$disconnect(); }))
-    .catch((error) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("Error: ", error);
-    prisma.$disconnect();
+    .then(() => __awaiter(void 0, void 0, void 0, function* () { return yield prisma.$disconnect(); }))
+    .catch((e) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("Error: ", e);
+    yield prisma.$disconnect();
     process.exit(1);
 }));
